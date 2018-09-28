@@ -1,0 +1,59 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<metadata>
+Created by FontForge 20170924 at Fri Sep 28 01:11:15 2018
+ By www-data
+Created by iconfont
+</metadata>
+<defs>
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face 
+    font-family="iconfont"
+    font-weight="400"
+    font-stretch="normal"
+    units-per-em="1024"
+    panose-1="2 0 5 3 0 0 0 0 0 0"
+    ascent="896"
+    descent="-128"
+    bbox="17 16 1086 1085"
+    underline-thickness="0"
+    underline-position="10"
+    unicode-range="U+001D-E77B"
+  />
+<missing-glyph 
+ />
+    <glyph glyph-name=".notdef" 
+ />
+    <glyph glyph-name=".notdef" 
+ />
+    <glyph glyph-name=".null" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="nonmarkingreturn" 
+ />
+    <glyph glyph-name="uniE67A" unicode="&#xe67a;" 
+d="M34 914h932v-64h-932v64zM98 782h336v-732h-336v732zM566 782h332v-468h-332v468zM166 714v-600h200v600h-200z" />
+    <glyph glyph-name="uniE67C" unicode="&#xe67c;" 
+d="M149 801h336v-336h132v200h332v-200h136v-64h-136v-200h-332v200h-132v-336h-336v336h-132v64h132v336zM217 733v-600h200v600h-200z" />
+    <glyph glyph-name="uniE67E" unicode="&#xe67e;" 
+d="M99 914h336v-732h-336v732zM167 850v-600h200v600h-200zM567 650h332v-468h-332v468zM35 114h932v-64h-932v64z" />
+    <glyph glyph-name="uniE683" unicode="&#xe683;" 
+d="M50 965h68v-932h-68v932zM186 901h464v-336h-464v336zM186 433h732v-328h-732v328zM250 365v-200h600v200h-600z" />
+    <glyph glyph-name="uniE684" unicode="&#xe684;" 
+d="M400 1085h68v-132h200v-336h-200v-132h332v-332h-332v-136h-68v136h-332v332h332v132h-200v336h200v132zM136 417v-200h600v200h-600z" />
+    <glyph glyph-name="uniE685" unicode="&#xe685;" 
+d="M851 965h68v-932h-68v932zM319 901h468v-336h-468v336zM51 433h736v-332h-736v332zM119 365v-200h600v200h-600z" />
+    <glyph glyph-name="uniE686" unicode="&#xe686;" 
+d="M18 850h1068v-68h-336v-268h-400v268h-332v68zM18 382h1068v-68h-200v-264h-668v264h-200v68zM286 314v-200h532v200h-532z" />
+    <glyph glyph-name="uniE687" unicode="&#xe687;" 
+d="M350 850h400v-136h336v-64h-336v-136h-400v136h-332v64h332v136zM218 382h668v-132h200v-68h-200v-132h-668v132h-200v68h200v132zM286 314v-200h532v200h-532z" />
+    <glyph glyph-name="uniE688" unicode="&#xe688;" 
+d="M350 850h400v-268h336v-68h-1068v68h332v268zM218 382h668v-268h200v-64h-1068v64h200v268zM286 314v-200h532v200h-532z" />
+    <glyph glyph-name="uniE689" unicode="&#xe689;" 
+d="M68 1084h68v-200h264v-668h-264v-200h-68v1068zM536 1084h64v-332h268v-400h-268v-336h-64v1068zM136 816v-532h200v532h-200z" />
+    <glyph glyph-name="uniE68E" unicode="&#xe68e;" 
+d="M186 1084h64v-200h136v-668h-136v-200h-64v200h-136v668h136v200zM650 1084h68v-332h132v-400h-132v-336h-68v336h-132v400h132v332zM118 816v-532h200v532h-200z" />
+    <glyph glyph-name="uniE77B" unicode="&#xe77b;" 
+d="M318 1084h68v-1068h-68v200h-268v668h268v200zM786 1084h64v-1068h-64v336h-268v400h268v332zM118 816v-532h200v532h-200z" />
+  </font>
+</defs></svg>

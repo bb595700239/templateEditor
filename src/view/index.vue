@@ -21,5 +21,4 @@
   }
 </script>
 <style lang="scss">
-  @import '../assets/css/mixin';
 </style>

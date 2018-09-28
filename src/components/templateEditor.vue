@@ -897,7 +897,7 @@
 </script>
 <style scoped lang="scss">
   @import '../assets/css/mixin';
-
+  @import "../assets/fonts/font-align/iconfont.css";
   .template-editor {
     height: 100%;
     width: 100%;

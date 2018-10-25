@@ -13,7 +13,7 @@ export default {
 <style lang="scss">
 @import "assets/css/mixin.scss";
 @import "assets/css/reset.scss";
-
+@import "assets/fonts/font-align/iconfont.css";
 body{
   width:100%;
   height:100%;

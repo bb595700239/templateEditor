@@ -59,96 +59,102 @@
         清空
       </el-button>
       <el-button size="mini" type="success" @click="getPdf">
-        保存
+        下载PDF
       </el-button>
     </div>
     <div class="edit-content">
       <div class="edit-info">
-        <div class="edit-canvas"
-             :class="[{active:select.indexOf(canvas)>-1}]"
-             ref="canvas"
-             :style="{width:`${canvas.width}px`, height:`${canvas.height}px`,background:canvas.background,marginTop:`${-canvas.height/2}px`,marginLeft:`${-canvas.width/2}px`}"
-             @click.exact.stop="handleSelect(canvas)"
+        <ruler-tool
+          :is-scale-revise="true"
+          :stage-info='canvas'
+          :selectors="$refs"
+          @verticalLine="geInfo($event,'verticalLineList')"
+          @levelLine="geInfo($event,'levelLineList')"
+        >
+          <div class="edit-canvas"
+               :class="[{active:select.indexOf(canvas)>-1}]"
+               ref="canvas"
+               :style="{width:`${canvas.width}px`, height:`${canvas.height}px`,background:canvas.background}"
+               @click.exact.stop="handleSelect(canvas)"
 
-             @keydown.delete="handledelete"
-             @click.ctrl.stop="handleSelectMultiple(canvas)">
-          <div class="item"
-               :ref="item.time"
-               :style="{left:`${item.left}px`,top:`${item.top}px`,fontSize:`${item.fontSize}px`,fontWeight:item.fontWeight?'bold':'normal',fontStyle:item.fontStyle?'italic':'normal',color:`${item.fontColor}`}"
-               v-for="(item,index) in canvas.items"
-               v-if="item.type === 'text'"
-               @click.exact.stop="handleSelect(item)"
-               @click.ctrl.stop="handleSelectMultiple(item)"
-               @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
-               @keydown.up="item.top-=1"
-               @keydown.down="item.top+=1"
-               @keydown.left="item.left-=1"
-               @keydown.right="item.left+=1"
-               @keyup.ctrl.67.exact="handlecopy(item)"
-               :class="[{active:select.indexOf(item)>-1}]"
-               :key="index"
-               :tabindex="index"
-          >
-            {{item.content}}
-          </div>
-          <div class="item"
-               :ref="item.time"
-               :style="{left:`${item.left}px`,top:`${item.top}px`,fontSize:`${item.labelFontSize}px`,fontWeight:item.labelFontWeight?'bold':'normal',color:`${item.labelFontColor}`}"
-               v-for="(item,index) in canvas.items"
-               v-if="item.type === 'prop'"
-               @click.exact.stop="handleSelect(item)"
-               @click.ctrl.stop="handleSelectMultiple(item)"
-               @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
-               @keydown.up="item.top-=1"
-               @keydown.down="item.top+=1"
-               @keydown.left="item.left-=1"
-               @keydown.right="item.left+=1"
-               @keyup.ctrl.67.exact="handlecopy(item)"
-               :class="[{active:select.indexOf(item)>-1}]"
-               :key="index"
-               :tabindex="index"
-          >
-            {{item.label}}
-            <span
-              :style="{fontSize:`${item.valueFontSize}px`,fontWeight:item.valueFontWeight?'bold':'normal',color:`${item.valueFontColor}`,marginLeft:`${item.valueMarginLeft}px`}">{{'{' + item.value + '}'}}</span>
-          </div>
-
-          <div class="item g-table"
-               :ref="item.time"
-               :style="{left:`${item.left}px`,top:`${item.top}px`,height:`${item.allHeight}px`,borderColor:`${item.borderColor}`,borderWidth:`${item.borderWidth}px`}"
-               v-for="(item,index) in canvas.items"
-               v-if="item.type === 'table'"
-               @click.exact.stop="handleSelect(item)"
-               @click.ctrl.stop="handleSelectMultiple(item)"
-               @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
-               @keydown.up="item.top-=1"
-               @keydown.down="item.top+=1"
-               @keydown.left="item.left-=1"
-               @keydown.right="item.left+=1"
-               @keyup.ctrl.67.exact="handlecopy(item)"
-               :class="[{active:select.indexOf(item)>-1}]"
-               :key="index"
-               :tabindex="index"
-          >
-            <div class="g-tHead flex-box"
-                 :style="{borderBottomWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`}">
-              <div class="g-column" v-for="(column,columnIndex) in item.tHead" :key="columnIndex"
-                   :style="{borderRightWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,fontSize:`${item.tHeadFontSize}px`,fontWeight:item.tHeadFontWeight?'bold':'normal',color:`${item.tHeadFontColor}`,lineHeight:`${item.tHeadHeight}px`,width:`${column.width}px`}">
-                {{column.content}}
-              </div>
+               @keydown.delete="handledelete"
+               @click.ctrl.stop="handleSelectMultiple(canvas)">
+            <div class="item"
+                 :ref="item.time"
+                 :style="{left:`${item.left}px`,top:`${item.top}px`,fontSize:`${item.fontSize}px`,fontWeight:item.fontWeight?'bold':'normal',fontStyle:item.fontStyle?'italic':'normal',color:`${item.fontColor}`}"
+                 v-for="(item,index) in canvas.items"
+                 v-if="item.type === 'text'"
+                 @click.exact.stop="handleSelect(item)"
+                 @click.ctrl.stop="handleSelectMultiple(item)"
+                 @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
+                 @keydown.up="item.top-=1"
+                 @keydown.down="item.top+=1"
+                 @keydown.left="item.left-=1"
+                 @keydown.right="item.left+=1"
+                 :class="[{active:select.indexOf(item)>-1}]"
+                 :key="index"
+                 :tabindex="index"
+            >
+              {{item.content}}
             </div>
-            <div class="g-line-box flex-box"
-                 :style="{height:`calc(100% - ${item.tHeadHeight}px - ${item.borderWidth}px)`}">
-              <div class="g-column" v-for="(column,columnIndex) in item.tHead" :key="columnIndex"
-                   :style="{borderRightWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,width:`${column.width}px`,height:item.valueHeight*item.lineNumber>Number(`calc(100% - ${item.tHeadHeight}px - ${item.borderWidth}px)`)?`auto`:`100%`}">
-                <p class="g-line" v-for="(line,lineIndex) in item.lineNumber" :key="lineIndex" :style="{borderBottomWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,fontSize:`${item.valueFontSize}px`,fontWeight:item.valueFontWeight?'bold':'normal',color:`${item.valueFontColor}`,
+            <div class="item"
+                 :ref="item.time"
+                 :style="{left:`${item.left}px`,top:`${item.top}px`,fontSize:`${item.labelFontSize}px`,fontWeight:item.labelFontWeight?'bold':'normal',color:`${item.labelFontColor}`}"
+                 v-for="(item,index) in canvas.items"
+                 v-if="item.type === 'prop'"
+                 @click.exact.stop="handleSelect(item)"
+                 @click.ctrl.stop="handleSelectMultiple(item)"
+                 @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
+                 @keydown.up="item.top-=1"
+                 @keydown.down="item.top+=1"
+                 @keydown.left="item.left-=1"
+                 @keydown.right="item.left+=1"
+                 :class="[{active:select.indexOf(item)>-1}]"
+                 :key="index"
+                 :tabindex="index"
+            >
+              {{item.label}}
+              <span
+                :style="{fontSize:`${item.valueFontSize}px`,fontWeight:item.valueFontWeight?'bold':'normal',color:`${item.valueFontColor}`,marginLeft:`${item.valueMarginLeft}px`}">{{'{' + item.value + '}'}}</span>
+            </div>
+
+            <div class="item g-table"
+                 :ref="item.time"
+                 :style="{left:`${item.left}px`,top:`${item.top}px`,height:`${item.allHeight}px`,borderColor:`${item.borderColor}`,borderWidth:`${item.borderWidth}px`}"
+                 v-for="(item,index) in canvas.items"
+                 v-if="item.type === 'table'"
+                 @click.exact.stop="handleSelect(item)"
+                 @click.ctrl.stop="handleSelectMultiple(item)"
+                 @mousedown.exact.stop="handleonmousedown($event,null,null,item)"
+                 @keydown.up="item.top-=1"
+                 @keydown.down="item.top+=1"
+                 @keydown.left="item.left-=1"
+                 @keydown.right="item.left+=1"
+                 :class="[{active:select.indexOf(item)>-1}]"
+                 :key="index"
+                 :tabindex="index"
+            >
+              <div class="g-tHead flex-box"
+                   :style="{borderBottomWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`}">
+                <div class="g-column" v-for="(column,columnIndex) in item.tHead" :key="columnIndex"
+                     :style="{borderRightWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,fontSize:`${item.tHeadFontSize}px`,fontWeight:item.tHeadFontWeight?'bold':'normal',color:`${item.tHeadFontColor}`,lineHeight:`${item.tHeadHeight}px`,width:`${column.width}px`}">
+                  {{column.content}}
+                </div>
+              </div>
+              <div class="g-line-box flex-box"
+                   :style="{height:`calc(100% - ${item.tHeadHeight}px - ${item.borderWidth}px)`}">
+                <div class="g-column" v-for="(column,columnIndex) in item.tHead" :key="columnIndex"
+                     :style="{borderRightWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,width:`${column.width}px`,height:item.valueHeight*item.lineNumber>Number(`calc(100% - ${item.tHeadHeight}px - ${item.borderWidth}px)`)?`auto`:`100%`}">
+                  <p class="g-line" v-for="(line,lineIndex) in item.lineNumber" :key="lineIndex" :style="{borderBottomWidth:`${item.borderWidth}px`,borderColor:`${item.borderColor}`,fontSize:`${item.valueFontSize}px`,fontWeight:item.valueFontWeight?'bold':'normal',color:`${item.valueFontColor}`,
                 lineHeight:item.valueHeight*item.lineNumber>(item.allHeight-item.tHeadHeight-item.borderWidth)?`${item.valueHeight}px`:`calc((${item.allHeight}px - ${item.tHeadHeight}px - ${item.borderWidth}px - ${(item.lineNumber-1)*item.borderWidth}px) / ${item.lineNumber})`}">
-                  {{'{' + item.value + '}'}}
-                </p>
+                    {{'{' + column.value + '}'}}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ruler-tool>
+
       </div>
       <div class="edit-pannel">
         <div v-if="select.length === 1">
@@ -279,11 +285,11 @@
           <div class="pannel-block-attr" v-if="select[0].type === 'table'">
             <div class="block-tit">表格</div>
             <ul class="block">
-              <li class="label" @mousewheel.prevent="handlemousewheel($event,null,'columnNumber',tableChange)"
+              <!--<li class="label" @mousewheel.prevent="handlemousewheel($event,null,'columnNumber',tableChange)"
                   @mousedown="handleonmousedown($event,null,'columnNumber',null,tableChange)">
                 <span>列数</span>
                 <div class="info">{{select[0].columnNumber}}</div>
-              </li>
+              </li>-->
               <li class="label" @mousewheel.prevent="handlemousewheel($event,null,'boxWidth',tableChange)"
                   @mousedown="handleonmousedown($event,null,'boxWidth',null,tableChange)">
                 <span>平均列宽</span>
@@ -381,6 +387,7 @@
   import _ from 'lodash'
   import html2Canvas from 'html2canvas'
   import JsPDF from 'jspdf'
+  import rulerTool from './ruler-tool.vue'
 
   export default {
     data() {
@@ -421,15 +428,16 @@
             tHead: [{
               content: '姓名',
               width: 100,
+              value: 'name',
             }, {
               content: '姓名',
               width: 100,
+              value: 'name',
             }],
             tHeadHeight: 60,
             tHeadFontSize: 30,
             tHeadFontWeight: false,
             tHeadFontColor: '#000',
-            value: 'name',
             valueFontSize: 20,
             valueFontWeight: false,
             valueFontColor: '#000',
@@ -452,6 +460,14 @@
         select: [],
         move: false,
         back: false,
+        verticalLineList: [],
+        levelLineList: [],
+        contentTop: 0,
+        contentLeft: 0,
+      }
+    },
+    props: {
+      initCanvas: {
       }
     },
     created() {
@@ -462,8 +478,11 @@
       }
       document.onkeyup = (e) => {
         if (e.ctrlKey) {
-          if (e.keyCode == 90) {
+          if (e.keyCode == 90) { //ctrl + Z
             this.back = false
+          }
+          if (e.keyCode == 67) {  //ctrl + C
+            this.handlecopy()
           }
         }
       }
@@ -475,7 +494,6 @@
         }
       }
     },
-    props: [],
     computed: {
       selectOne(){
         return this.select[0]
@@ -487,7 +505,7 @@
         return some
       },
       isAlignment () {
-        if (this.select.length === 0 || (this.select.length == 1 && this.hasCanvas)) {
+        if (this.select.length === 0 || (this.select.length === 1 && this.hasCanvas)) {
           return false
         } else {
           return true
@@ -502,6 +520,9 @@
       }
     },
     methods: {
+      geInfo(info,name){
+        this[name] = info;
+      },
       getPdf(){
         let pdfDom = this.$refs.canvas
         var title = 'template'
@@ -523,13 +544,8 @@
       tableChange (type) {
         const obj = this.selectOne;
         if (type === 'columnNumber') {
-          obj.tHead = [];
-          for (let i = 0; i < obj.columnNumber; i++) {
-            obj.tHead.push({
-              content: '姓名',
-              width: 100,
-            })
-          }
+          this.$emit('columnNumber', obj.columnNumber);
+          this.handleCommandSend('table');
         }
         if (type === 'boxWidth') {
           obj.tHead.forEach(val => {
@@ -597,6 +613,13 @@
         const pageX = e.clientX;
         let oldclientY = pageY
         let oldclientX = pageX
+        if (this.select.length === 1&&this.select[0].type !== 'canvas') {
+          const itemInfo = this.$refs[this.select[0].time][0].getBoundingClientRect()
+          var itemWidth = itemInfo.width
+          var itemHeight = itemInfo.height
+          var propTop = obj['top'];
+          var propLeft = obj['left'];
+        }
 
         if (!document.onmousemove) {
           document.onmousemove = (event) => {
@@ -609,8 +632,42 @@
               obj[prop] += event.clientY - oldclientY
             } else {
               if (this.select.length === 1) {
-                obj['top'] += event.clientY - oldclientY
-                obj['left'] += event.clientX - oldclientX
+                /*obj['top'] += event.clientY - oldclientY;
+                 obj['left'] += event.clientX - oldclientX;*/
+                obj['top'] = propTop + event.clientY - pageY;
+                obj['left'] = propLeft + event.clientX - pageX;
+                if (this.levelLineList.length>0) {
+                  for (let val of this.levelLineList) {
+                    if (val.truthTop - 10 < obj['top'] && obj['top']<val.truthTop + 10) {
+                      obj['top'] = val.truthTop;
+                      break
+                    }
+                    if (val.truthTop - 10 < obj['top']+itemHeight/2 && obj['top']+itemHeight/2<val.truthTop + 10) {
+                      obj['top'] = val.truthTop - itemHeight/2;
+                      break
+                    }
+                    if (val.truthTop - 10 < obj['top']+itemHeight && obj['top']+itemHeight<val.truthTop + 10) {
+                      obj['top'] = val.truthTop - itemHeight;
+                      break
+                    }
+                  }
+                }
+                if (this.verticalLineList.length>0) {
+                  for (let val of this.verticalLineList) {
+                    if (val.truthLeft - 10 < obj['left'] && obj['left']<val.truthLeft + 10) {
+                      obj['left'] = val.truthLeft;
+                      break
+                    }
+                    if (val.truthLeft - 10 < obj['left']+itemWidth/2 && obj['left']+itemWidth/2<val.truthLeft + 10) {
+                      obj['left'] = val.truthLeft - itemWidth/2;
+                      break
+                    }
+                    if (val.truthLeft - 10 < obj['left']+itemWidth && obj['left']+itemWidth<val.truthLeft + 10) {
+                      obj['left'] = val.truthLeft - itemWidth;
+                      break
+                    }
+                  }
+                }
               } else {
                 this.move = true
                 this.select.forEach((item) => {
@@ -637,10 +694,12 @@
         info.time = new Date().getTime()
         this.canvas.items.push(info)
       },
-      handlecopy(obj){
-        obj = JSON.parse(JSON.stringify(obj))
-        obj.time = new Date().getTime()
-        this.canvas.items.push(obj)
+      handlecopy(){
+        this.select.forEach((obj)=>{
+          obj = JSON.parse(JSON.stringify(obj))
+          obj.time = new Date().getTime()
+          this.canvas.items.push(obj)
+        })
       },
       itemAlign(local){
         const canvasWidth = this.canvas.width
@@ -878,7 +937,9 @@
       },
 
     },
-    components: {},
+    components: {
+      rulerTool
+    },
     watch: {
       canvas: {
         handler: _.debounce(function (val, oldval) {
@@ -892,12 +953,15 @@
         }, 100),
         deep: true//对象内部的属性监听，也叫深度监听
       },
+      initCanvas: function(val,oldval) {
+        this.canvas = val;
+      }
     }
   }
 </script>
 <style scoped lang="scss">
   @import '../assets/css/mixin';
-  @import "../assets/fonts/font-align/iconfont.css";
+
   .template-editor {
     height: 100%;
     width: 100%;
@@ -959,9 +1023,7 @@
         position: relative;
         flex: 1;
         .edit-canvas {
-          position: absolute;
-          left: 50%;
-          top: 50%;
+          position: relative;
           &.active:before {
             content: '';
             width: 100%;
